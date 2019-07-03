@@ -82,7 +82,7 @@ sepiraInfNet <- function(data, tissue, toi, cft = NULL, TFs, sdth = 0.25, sigth 
   ### compute correlations and estimate P-values
   corNET.m <- cor(t(exp.m[mapTGTS.idx, ]), t(exp.m[mapTF.idx, ]))
   zNET.m <- 0.5 * log( (1 + corNET.m) / (1 - corNET.m))
-  stdev <- 1 / sqrt(length(tt.v) - 3) ### this is not the number of independent samples but the number of independent tissues. the latter is used because of the strong dependence between samples from the same tissue, but also because it leads to a more stringent significance threshold
+  stdev <- 1 / sqrt(ncol(exp.m) - 3) 
   pvNET.m <- 2 * pnorm(abs(zNET.m), 0, stdev, lower.tail = FALSE)
   ### for each gene, now identify the TFs which are correlated univariately- for these then run multivariate regression
   if (is.null(sigth)) {
